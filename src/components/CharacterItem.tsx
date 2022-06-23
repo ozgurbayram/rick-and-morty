@@ -2,8 +2,6 @@ import { View, Text, Image, Pressable } from 'react-native'
 import React from 'react'
 import useSWR from 'swr'
 import { fetcher } from '../hooks/useEpisode'
-import { MainStackParamList, TCharacter } from '../types'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
 
 const Item:React.FC<TCharacter> = ({

@@ -1,7 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { clearAllKeys, getFavoriteEpisodes } from '../services/episodeServices'
+import {  getFavoriteEpisodes } from '../services/episodeServices'
 import EpisodeItem from '../components/EpisodeItem'
 import { TEpisode } from '../types'
 import { getFavoriteCharacters } from '../services/characterServices'

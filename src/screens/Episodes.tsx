@@ -1,5 +1,5 @@
-import { View, Text, Modal, ActivityIndicator, FlatList, ListRenderItem, Pressable, Button } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, Modal, ActivityIndicator, FlatList, ListRenderItem } from 'react-native'
+import React, { useState } from 'react'
 import { MainStackParamList, TEpisode } from '../types'
 import EpisodeItem from '../components/EpisodeItem'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -9,7 +9,6 @@ type Route = NativeStackScreenProps<MainStackParamList>
 
 const Episodes:React.FC<Route> = ({route,navigation}:Route) => {
     const [pageIndex, setPageIndex] = useState(1)
-    const [list, setList] = useState()
     const {data,error,isLoading} = useEpisodePage(pageIndex)
     
     
