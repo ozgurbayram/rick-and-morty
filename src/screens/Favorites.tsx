@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import {  getFavoriteEpisodes } from '../services/episodeServices'
@@ -18,22 +18,28 @@ const Characters = ()=>{
             setCharacters(res)
         })
     }, [])
+    const _renderItem = ({item}) =>{
+        return (
+            <View key={item.key} style={{display:'flex',flexDirection:'row',backgroundColor:'#333',margin:10}}>
+                <Image
+                    source={{
+                        uri:item.image,
+                        height:100,
+                        width:100
+                    }}
+                />
+                <Text style={{color:'#fff'}}>{item.name}</Text>
+            </View>
+        )
+    }
     return (
         <View style={{flex:1,backgroundColor:'#fff'}}>
-            {characters && characters.map((i)=>{
-                return (
-                    <View style={{display:'flex',flexDirection:'row',backgroundColor:'#333',margin:10}}>
-                        <Image
-                            source={{
-                                uri:i.image,
-                                height:100,
-                                width:100
-                            }}
-                        />
-                        <Text style={{color:'#fff'}}>{i.name}</Text>
-                    </View>
-                )
-            })}
+            {characters && (
+                <FlatList
+                    data={characters}
+                    renderItem={_renderItem}
+                />
+            )}
         </View>
     )
 }
@@ -45,14 +51,19 @@ const Episodes = ()=>{
             setEpisodes(res)
         })
     }, [])
-    
+    const _renderItem = ({item})=>{
+        return (
+            <EpisodeItem key={item.key} {...item}/>
+        )
+    }
     return (
         <View style={{flex:1,backgroundColor:'#fff'}}>
-            {episodes && episodes.map((ep)=>{
-                return (
-                    <EpisodeItem  {...ep}/>
-                )
-            })}
+            {episodes && (
+                <FlatList
+                    data={episodes}
+                    renderItem={_renderItem} 
+                />
+            )}
         </View>
     )
 }
