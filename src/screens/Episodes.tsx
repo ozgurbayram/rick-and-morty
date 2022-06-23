@@ -1,22 +1,24 @@
-import { View, Text, Modal, ActivityIndicator, FlatList, ListRenderItem } from 'react-native'
-import React, { useEffect } from 'react'
-import { useCharacter } from '../hooks/useCharacter'
-import { TEpisode } from '../types'
+import { View, Text, Modal, ActivityIndicator, FlatList, ListRenderItem, Pressable, Button } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { MainStackParamList, TEpisode } from '../types'
 import EpisodeItem from '../components/EpisodeItem'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { useEpisodePage } from '../hooks/useEpisodePage'
 
-const Episodes = () => {
+type Route = NativeStackScreenProps<MainStackParamList>
+
+const Episodes:React.FC<Route> = ({route,navigation}:Route) => {
+    const [pageIndex, setPageIndex] = useState(1)
+    const [list, setList] = useState()
+    const {data,error,isLoading} = useEpisodePage(pageIndex)
     
-    const {episodes,info,error,isLoading} = useCharacter()
-    useEffect(() => {
-        console.log(info);
-        
-    }, [])
     
     const _renderItem:ListRenderItem<TEpisode> = ({item}) =>{
         return(
-            <EpisodeItem {...item}/>
+            <EpisodeItem navigation={navigation} {...item}/>
         )
     }
+    
     if(error){
         return (
             <View>
@@ -24,6 +26,7 @@ const Episodes = () => {
             </View>
         )
     }
+
     if(isLoading){
         return(
             <Modal>
@@ -34,9 +37,10 @@ const Episodes = () => {
     return (
         <View style={{flex:1,backgroundColor:'#fff'}}>
             <FlatList
-                data={episodes}
+                data={data.results}
                 renderItem={_renderItem}
             />
+        
         </View>
     )
 }

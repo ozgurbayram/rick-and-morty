@@ -1,14 +1,15 @@
-import useSWR from "swr"
-import { BASE_URL } from "../constatnts"
+import useSWR, { Fetcher } from "swr"
+import { BASE_URL } from "../constants"
+import { TCharacter } from "../types"
 
-const fetcher = (url:string) => fetch(url).then(res => res.json())
+const fetcher:Fetcher<TCharacter> = (url:string) => fetch(url).then(res => res.json())
 
-export const useCharacter =()=>{
-    const {data,error} = useSWR(`${BASE_URL}/episode`,fetcher)
+
+export const useCharacter =(id:number)=>{
+    const {data,error} = useSWR(`${BASE_URL}/character/${id}`,fetcher)
     
     return {
-        episodes:data && data.results,
-        info:data && data.info,
+        data:data,
         error:error,
         isLoading:!error && !data
     }
